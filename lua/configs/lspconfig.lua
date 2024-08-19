@@ -4,14 +4,14 @@ local on_attach = configs.on_attach
 local on_init = configs.on_init
 local capabilities = configs.capabilities
 
-
-
 local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
 -- EXAMPLE
-local servers = {"cssls", "terraformls", "pyright", "cmake", "yamlls", "zls", "rust_analyzer", "bufls", "ruby_lsp",
-                 "tsserver", "tailwindcss", "eslint"}
+local servers = {
+    "cssls", "terraformls", "pyright", "cmake", "yamlls", "zls",
+    "rust_analyzer", "bufls", "ruby_lsp", "tsserver", "tailwindcss", "eslint"
+}
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -33,9 +33,7 @@ lspconfig.gopls.setup {
         gopls = {
             completeUnimported = true,
             usePlaceholders = true,
-            analyses = {
-                unusedparams = true
-            }
+            analyses = {unusedparams = true}
         }
     }
 }
@@ -57,11 +55,7 @@ lspconfig.templ.setup({
     filetypes = {"templ"}
 })
 
-vim.filetype.add({
-    extension = {
-        templ = "templ"
-    }
-})
+vim.filetype.add({extension = {templ = "templ"}})
 
 lspconfig.html.setup({
     on_attach = on_attach,
