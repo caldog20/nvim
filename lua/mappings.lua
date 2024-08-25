@@ -144,5 +144,6 @@ end
 
 map("n", ";", ":", {desc = "CMD enter command mode"})
 map("i", "jk", "<ESC>")
+map("n", "<leader>y", "<cmd>YankBank<CR>", {noremap = true, desc = "YankBank Open"})
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")

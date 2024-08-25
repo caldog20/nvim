@@ -186,6 +186,12 @@ local plugins = {
             conf.renderer.icons.glyphs.git.untracked = ""
             return conf
         end
+    }, {
+        "ptdewey/yankbank-nvim",
+        lazy = false,
+        dependencies = "kkharji/sqlite.lua",
+        opts = function() return require "configs.yankbank" end,
+        config = function(_, opts) require('yankbank').setup(opts) end
     }
 }
 
