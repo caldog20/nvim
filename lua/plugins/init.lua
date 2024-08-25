@@ -170,6 +170,22 @@ local plugins = {
             end)
         end,
         lazy = false
+    }, {
+        "nvim-tree/nvim-tree.lua",
+        opts = function()
+            local conf = require "nvchad.configs.nvimtree"
+            conf.filters = {dotfiles = false}
+            conf.git = {enable = true, ignore = false}
+            conf.view = {
+                width = 30,
+                adaptive_size = true,
+                preserve_window_proportions = true
+            }
+            conf.actions = {open_file = {resize_window = false}}
+            conf.renderer.icons.show = {git = true}
+            conf.renderer.icons.glyphs.git.untracked = ""
+            return conf
+        end
     }
 }
 
