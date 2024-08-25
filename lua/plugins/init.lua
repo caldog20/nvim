@@ -68,9 +68,15 @@ local plugins = {
             -- require("core.utils").load_mappings("gopher")
         end,
         build = function() vim.cmd [[silent! GoInstallDeps]] end
-    },
-    {"ThePrimeagen/harpoon", branch = "harpoon2", event = "VeryLazy", opts = {}},
-    {"christoomey/vim-tmux-navigator", lazy = false}, {
+    }, {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        event = "VeryLazy",
+        opts = {},
+        config = function()
+            require("harpoon").setup(opts)
+        end
+    }, {"christoomey/vim-tmux-navigator", lazy = false}, {
         "kylechui/nvim-surround",
         version = "*", -- Use for stability; omit to use `main` branch for the latest features
         event = "VeryLazy",
@@ -153,6 +159,7 @@ local plugins = {
             vim.o.foldenable = true
 
             require("ufo").setup()
+            vim.keymap.set("n", "q", "za", {desc = "Fold toggle"})
         end
     }, {
         "ThePrimeagen/refactoring.nvim",

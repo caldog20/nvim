@@ -80,32 +80,59 @@ M.navi = {
     }
 }
 
+local harpoon = require("harpoon")
+local conf = require("telescope.config").values
+local function toggle_telescope(harpoon_files)
+    local make_finder = function()
+        local paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+            table.insert(paths, item.value)
+        end
+
+        return require("telescope.finders").new_table({results = paths})
+    end
+    require("telescope.pickers").new({}, {
+        prompt_title = "Harpoon",
+        finder = make_finder(),
+        previewer = conf.file_previewer({}),
+        sorter = conf.generic_sorter({}),
+        attach_mappings = function(prompt_buffer_number, map)
+            -- The keymap you need
+            map("n", "dd", function()
+                local state = require("telescope.actions.state")
+                local selected_entry = state.get_selected_entry()
+                local current_picker = state.get_current_picker(
+                                           prompt_buffer_number)
+
+                -- This is the line you need to remove the entry
+                harpoon:list():remove(selected_entry)
+                current_picker:refresh(make_finder())
+            end)
+
+            return true
+        end
+    }):find()
+end
+
 M.harpoon = {
     -- plugin = true,
     n = {
         ["<leader>m"] = {
-            function()
-                local harpoon = require "harpoon"
-                harpoon:list():append()
-            end, "Harpoon Mark file in Harpoon"
+            function() harpoon:list():add() end, "Harpoon Mark file"
         },
         ["<leader>'"] = {
             function()
-                local harpoon = require "harpoon"
-                harpoon.ui:toggle_quick_menu(harpoon:list())
-            end, "Harpoon Toggle Harpoon quick menu"
+                toggle_telescope(harpoon:list())
+                -- harpoon.ui:toggle_quick_menu(harpoon:list())
+            end, "Harpoon Toggle list"
         },
         ["<leader>1"] = {
-            function()
-                local harpoon = require "harpoon"
-                harpoon:list():select(1)
-            end, "Harpoon Navigate to file 1"
+            function() harpoon:list():select(1) end,
+            "Harpoon Navigate to file 1"
         },
         ["<leader>2"] = {
-            function()
-                local harpoon = require "harpoon"
-                harpoon:list():select(2)
-            end, "Harpoon Navigate to file 2"
+            function() harpoon:list():select(2) end,
+            "Harpoon Navigate to file 2"
         }
     }
 }
@@ -144,6 +171,7 @@ end
 
 map("n", ";", ":", {desc = "CMD enter command mode"})
 map("i", "jk", "<ESC>")
-map("n", "<leader>y", "<cmd>YankBank<CR>", {noremap = true, desc = "YankBank Open"})
+map("n", "<leader>y", "<cmd>YankBank<CR>",
+    {noremap = true, desc = "YankBank Open"})
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
