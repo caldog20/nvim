@@ -248,6 +248,10 @@ local plugins = {
       require "configs.nvim-treesitter-textobjects"
     end,
   },
+  {
+    "mbbill/undotree",
+    lazy = false,
+  },
 }
 
 return plugins
