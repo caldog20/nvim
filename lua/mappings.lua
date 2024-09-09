@@ -191,9 +191,17 @@ for name, maps in pairs(M) do
   end
 end
 
+local caleb = require "caleb"
+
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 map("n", "<leader>y", "<cmd>YankBank<CR>", { noremap = true, desc = "YankBank Open" })
 
 map("n", "<leader>ut", "<cmd>UndotreeToggle<CR>", { noremap = true, desc = "Undotree Toggle" })
+map(
+  "n",
+  "<leader>`",
+  caleb.close_buffers_except_harpoon_list,
+  { noremap = true, desc = "Caleb Close Non-Harpoon buffers" }
+)
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
