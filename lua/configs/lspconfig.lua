@@ -7,6 +7,11 @@ local capabilities = configs.capabilities
 local lspconfig = require "lspconfig"
 local util = require "lspconfig/util"
 
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+
 -- EXAMPLE
 local servers = {
   "cssls",
@@ -21,6 +26,7 @@ local servers = {
   "ts_ls",
   "tailwindcss",
   "eslint",
+  "groovyls",
 }
 
 -- lsps with default config

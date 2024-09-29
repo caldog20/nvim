@@ -18,5 +18,6 @@ return {
     "tailwindcss",
     "eslint",
     "lua_ls",
+    "groovyls",
   },
 }

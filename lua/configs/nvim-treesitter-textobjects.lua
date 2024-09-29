@@ -42,6 +42,17 @@ nvimts.setup {
       -- and should return true or false
       include_surrounding_whitespace = true,
     },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+        ["]]"] = "@function.outer",
+      },
+      goto_previous_start = {
+        ["[["] = "@function.outer",
+      },
+      -- goto_next = {},
+    },
     lsp_interop = {
       enable = true,
       border = "none",
