@@ -21,7 +21,7 @@ local servers = {
   "yamlls",
   "zls",
   "rust_analyzer",
-  "bufls",
+  "buf_ls",
   "ruby_lsp",
   "ts_ls",
   "tailwindcss",

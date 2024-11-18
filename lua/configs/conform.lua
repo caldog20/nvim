@@ -14,6 +14,15 @@ local options = {
     html = { "prettierd", "prettier" },
     css = { "prettierd", "prettier" },
   },
+  default_format_opts = {
+    lsp_format = "fallback",
+  },
+  -- formatters = {
+  --   black = {
+  --     command = "black",
+  --     args = {"--line-length", "80"},
+  --   },
+  -- },
 
   -- format_on_save = {
   --   -- These options will be passed to conform.format()
