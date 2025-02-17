@@ -4,7 +4,7 @@
 local M = {}
 
 M.base46 = {
-  theme = "bearded-arc",
+  theme = "monochrome",
   -- transparency = true,
   hl_override = {
     -- GitSignsCurrentLineBlame = {fg = "white"},
@@ -52,6 +52,6 @@ M.nvdash = {
   },
 }
 
-M.cheatsheet = { theme = "simple" }
+-- M.cheatsheet = { theme = "simple" }
 
 return M

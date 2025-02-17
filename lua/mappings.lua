@@ -78,6 +78,7 @@ M.caleb = {
     ["<leader>Y"] = { '"+Y', "Caleb Yank to System" },
     ["<leader>P"] = { '"+P', "Caleb Paste from System" },
     ["<leader>w"] = { "<C-w>w", "Caleb Next Window" },
+    ["dd"] = {'"_dd', "Delete without overwriting register"},
   },
 }
 
@@ -183,7 +184,7 @@ M.git = {
 local map = vim.keymap.set
 
 -- Loop through old mapping table above
-for name, maps in pairs(M) do
+for _, maps in pairs(M) do
   for mode, data in pairs(maps) do
     for key, val in pairs(data) do
       map(mode, key, val[1], { desc = val[2] })
@@ -204,4 +205,6 @@ map(
   caleb.close_buffers_except_harpoon_list,
   { noremap = true, desc = "Caleb Close Non-Harpoon buffers" }
 )
+map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", {desc = "Telescope Diagnostics"})
+
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")

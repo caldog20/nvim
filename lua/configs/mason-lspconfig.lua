@@ -12,7 +12,7 @@ return {
     "rust_analyzer",
     "clangd",
     "templ",
-    "bufls",
+    "buf_ls",
     "ruby_lsp",
     "ts_ls",
     "tailwindcss",

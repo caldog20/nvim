@@ -85,16 +85,16 @@ local plugins = {
     end,
   },
   { "christoomey/vim-tmux-navigator", lazy = false },
-  {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup {
-        -- Configuration here, or leave empty to use defaults
-      }
-    end,
-  },
+  -- {
+  --   "kylechui/nvim-surround",
+  --   version = "*", -- Use for stability; omit to use `main` branch for the latest features
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("nvim-surround").setup {
+  --       -- Configuration here, or leave empty to use defaults
+  --     }
+  --   end,
+  -- },
   {
     "ggandor/leap.nvim",
     config = function()
@@ -252,6 +252,25 @@ local plugins = {
     "mbbill/undotree",
     lazy = false,
   },
+  {
+    "echasnovski/mini.ai",
+    version = false,
+    config = function()
+      return require("mini.ai").setup()
+    end,
+    lazy = false
+  },
+  { "echasnovski/mini.surround",
+    version = false,
+    config = function()
+      return require('mini.surround').setup()
+    end,
+    lazy = false
+  },
+  { 'tpope/vim-sleuth',
+    lazy = false
+  }, -- Detect tabstop and shiftwidth automatically
+
 }
 
 return plugins
