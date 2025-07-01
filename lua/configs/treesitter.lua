@@ -20,5 +20,6 @@ return {
     "hcl",
     "yaml",
     "groovy",
+    "python",
   },
 }
