@@ -1,4 +1,9 @@
 local plugins = {
+  { import = "nvchad.blink.lazyspec" },
+  {
+    "Saghen/blink.cmp",
+    opts = require "configs.blinkcmp",
+  },
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
@@ -258,38 +263,41 @@ local plugins = {
     config = function()
       return require("mini.ai").setup()
     end,
-    lazy = false
+    lazy = false,
   },
-  { "echasnovski/mini.surround",
+  {
+    "echasnovski/mini.surround",
     version = false,
     config = function()
-      return require('mini.surround').setup()
+      return require("mini.surround").setup()
     end,
-    lazy = false
+    lazy = false,
   },
-  { 'tpope/vim-sleuth',
-    lazy = false
-  }, -- Detect tabstop and shiftwidth automatically
+  { "tpope/vim-sleuth", lazy = false }, -- Detect tabstop and shiftwidth automatically
 
   {
     "kdheepak/lazygit.nvim",
     lazy = true,
     cmd = {
-        "LazyGit",
-        "LazyGitConfig",
-        "LazyGitCurrentFile",
-        "LazyGitFilter",
-        "LazyGitFilterCurrentFile",
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
     },
     -- optional for floating window border decoration
     dependencies = {
-        "nvim-lua/plenary.nvim",
+      "nvim-lua/plenary.nvim",
     },
     -- setting the keybinding for LazyGit with 'keys' is recommended in
     -- order to load the plugin when the command is run for the first time
     keys = {
-        { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-    }
+      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+  },
+  {
+    "towolf/vim-helm",
+    ft = "helm",
   },
 }
 

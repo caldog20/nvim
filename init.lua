@@ -48,3 +48,6 @@ autocmd("BufReadPost", {
   end,
 })
 
+vim.diagnostic.config({
+  virtual_lines = true,
+})

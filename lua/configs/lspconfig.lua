@@ -23,11 +23,17 @@ local servers = {
   "rust_analyzer",
   "buf_ls",
   "ruby_lsp",
-  "ts_ls",
+  -- "ts_ls",
+  "vtsls",
   "tailwindcss",
   "eslint",
   "groovyls",
+  "helm_ls",
 }
+
+-- lspconfig.helm_ls.setup{
+--   filetypes = {"helm", "helmfile"},
+-- }
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
@@ -37,6 +43,7 @@ for _, lsp in ipairs(servers) do
     capabilities = capabilities,
   }
 end
+
 
 lspconfig.gopls.setup {
   on_attach = on_attach,
@@ -80,12 +87,12 @@ lspconfig.html.setup {
   filetypes = { "html", "templ" },
 }
 
-lspconfig.htmx.setup {
-  on_attach = on_attach,
-  on_init = on_init,
-  capabilities = capabilities,
-  filetypes = { "html", "templ" },
-}
+-- lspconfig.htmx.setup {
+--   on_attach = on_attach,
+--   on_init = on_init,
+--   capabilities = capabilities,
+--   filetypes = { "html", "templ" },
+-- }
 
 -- configuring single server, example: typescript
 -- lspconfig.tsserver.setup {
