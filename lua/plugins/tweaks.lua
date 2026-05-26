@@ -1,15 +1,43 @@
 return {
   {
     "saghen/blink.cmp",
-    opts = {
-      keymap = {
-        preset = "enter",
-        ["<Tab>"] = { "select_next", "fallback" },
-        ["<Shift><Tab>"] = { "select_prev", "fallback" },
-      },
-    },
-  },
+    opts = function(_, opts)
+      -- opts.snippets = { preset = "default" }
 
+      -- Prevent blink from automatically writing the preselected completion into
+      -- the buffer. Without this, InsertEnter fires when a snippet activates and
+      -- blink immediately auto-inserts over the first tab-stop placeholder.
+      opts.completion = vim.tbl_deep_extend("force", opts.completion or {}, {
+        list = { selection = { auto_insert = false } },
+      })
+
+      -- Snippet navigation takes priority over completion selection so Tab
+      -- always jumps between fields even when the blink popup is open.
+      opts.keymap = {
+        preset = "enter",
+        ["<Tab>"] = {
+          function()
+            if vim.snippet.active({ direction = 1 }) then
+              vim.snippet.jump(1)
+              return true  -- jump() returns nil; explicit true prevents blink from
+            end            -- falling through to "fallback" (LazyVim's native snippet
+          end,             -- jump binding), which would double-jump every field.
+          "select_next",
+          "fallback",
+        },
+        ["<S-Tab>"] = {
+          function()
+            if vim.snippet.active({ direction = -1 }) then
+              vim.snippet.jump(-1)
+              return true
+            end
+          end,
+          "select_prev",
+          "fallback",
+        },
+      }
+    end,
+  },
   {
     "folke/snacks.nvim",
     keys = {
@@ -48,14 +76,14 @@ return {
         --   },
         -- },
         sources = {
-          -- files = {
-          --   hidden = true,
-          --   ignored = false,
-          --   args = {
-          --     "--glob",
-          --     "!{node_modules,build,dist,.git}",
-          --   },
-          -- },
+          files = {
+            hidden = true,
+            --   ignored = false,
+            --   args = {
+            --     "--glob",
+            --     "!{node_modules,build,dist,.git}",
+            --   },
+          },
           grep = {
             hidden = true,
             ignored = true,
@@ -80,6 +108,11 @@ return {
           gopls = {
             settings = {
               gopls = {
+                usePlaceholders = true,
+                completionOptions = {
+                  postfix = true,
+                  completeUnimported = true,
+                },
                 analyses = {
                   ST1000 = false,
                   ST1021 = false,
@@ -101,6 +134,18 @@ return {
         "typescript",
         "go",
         "python",
+        "markdown",
+        "markdown_inline",
+        "tsx",
+        "typescript",
+        "yaml",
+        "html",
+        "lua",
+        "json",
+        "javascript",
+        "bash",
+        "regex",
+        "sql",
       })
     end,
   },
