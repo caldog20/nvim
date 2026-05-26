@@ -1,0 +1,13 @@
+{
+  "Err": {
+    "prefix": "ifer",
+    "body": ["if err != nil {\n\t$0\n}"],
+    "description": "Err Check Statement"
+  },
+
+  "Err Return": {
+    "prefix": "iferr",
+    "body": ["if err != nil {\n\treturn $0\n}"],
+    "description": "Err Check Statement"
+  }
+}
