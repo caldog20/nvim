@@ -19,9 +19,9 @@ return {
           function()
             if vim.snippet.active({ direction = 1 }) then
               vim.snippet.jump(1)
-              return true  -- jump() returns nil; explicit true prevents blink from
-            end            -- falling through to "fallback" (LazyVim's native snippet
-          end,             -- jump binding), which would double-jump every field.
+              return true -- jump() returns nil; explicit true prevents blink from
+            end -- falling through to "fallback" (LazyVim's native snippet
+          end, -- jump binding), which would double-jump every field.
           "select_next",
           "fallback",
         },
