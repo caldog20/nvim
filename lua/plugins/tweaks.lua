@@ -101,6 +101,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = function(_, opts)
       return vim.tbl_deep_extend("force", opts, {
+        diagnostics = { virtual_text = false },
         inlay_hints = {
           enabled = false,
         },
@@ -123,6 +124,17 @@ return {
         },
       })
     end,
+  },
+
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters = {
+        prettier = {
+          prepend_args = { "--ignore-path", "" },
+        },
+      },
+    },
   },
 
   {
