@@ -30,8 +30,8 @@ return {
     dependencies = {
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
     },
+    branch = "master",
     keys = {
       { "<leader>cgf", "<cmd>GoFillStruct<cr>", ft = "go", desc = "Go Fill Struct (go.nvim)" },
       { "<leader>cge", "<cmd>GoIfErr<cr>", desc = "Go If Err" },
@@ -59,6 +59,7 @@ return {
 
       -- 4. Safe UI Defaults
       floating = true,
+      run_in_floaterm = true,
     },
     event = { "CmdlineEnter" },
     ft = { "go", "gomod" },
