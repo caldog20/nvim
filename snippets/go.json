@@ -9,5 +9,27 @@
     "prefix": "iferr",
     "body": ["if err != nil {\n\treturn $0\n}"],
     "description": "Err Check Statement"
+  },
+
+  "Context Param": {
+    "prefix": "ctx",
+    "body": ["ctx context.Context"],
+    "description": "Context Param"
+  },
+
+  "Context New": {
+    "prefix": "ctx,",
+    "body": ["ctx, cancel := context.$0\ndefer cancel()"],
+    "description": "New Context With Cancel"
+  },
+  "pf": {
+    "prefix": "pf",
+    "body": ["fmt.Printf($0)"],
+    "description": "fmt.Printf"
+  },
+  "pl": {
+    "prefix": "pl",
+    "body": ["fmt.Println($0)"],
+    "description": "fmt.Println"
   }
 }
