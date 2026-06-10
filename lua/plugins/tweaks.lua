@@ -66,6 +66,13 @@ return {
       },
     },
     opts = {
+      styles = {
+        notification = {
+          width = { min = 60, max = 0.5 },
+          height = { min = 3, max = 0.6 },
+          wo = { wrap = true },
+        },
+      },
       picker = {
         -- win = {
         --   input = {
