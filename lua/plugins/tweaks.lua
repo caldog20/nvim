@@ -120,6 +120,14 @@ return {
       })
     end,
   },
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        go = {}, -- disable golangci-lint for Go
+      },
+    },
+  },
 
   {
     "stevearc/conform.nvim",
