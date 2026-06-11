@@ -1,9 +1,9 @@
+local scratch = require("util.scratch")
+
 return {
   {
     "saghen/blink.cmp",
     opts = function(_, opts)
-      -- opts.snippets = { preset = "default" }
-
       -- Prevent blink from automatically writing the preselected completion into
       -- the buffer. Without this, InsertEnter fires when a snippet activates and
       -- blink immediately auto-inserts over the first tab-stop placeholder.
@@ -42,20 +42,18 @@ return {
     "folke/snacks.nvim",
     keys = {
       { "<leader>/", false },
+      { "<leader>.", scratch.open_for_cwd, desc = "Toggle Scratch Buffer" },
       {
         "<leader>e",
         function()
           local explorer_win = nil
-
           for _, win in ipairs(vim.api.nvim_list_wins()) do
             local buf = vim.api.nvim_win_get_buf(win)
-            local ft = vim.bo[buf].filetype
-            if ft == "snacks_picker_list" then
+            if vim.bo[buf].filetype == "snacks_picker_list" then
               explorer_win = win
               break
             end
           end
-
           if vim.api.nvim_get_current_win() ~= explorer_win and explorer_win then
             vim.api.nvim_set_current_win(explorer_win)
           else
@@ -73,32 +71,24 @@ return {
           wo = { wrap = true },
         },
       },
+      scratch = {
+        win = {
+          keys = {
+            ["pick_template"] = {
+              "<leader>t",
+              scratch.pick_template,
+              desc = "Pick template",
+              mode = { "n" },
+            },
+          },
+        },
+        win_by_ft = scratch.win_by_ft(),
+      },
       picker = {
-        -- win = {
-        --   input = {
-        --     keys = {
-        --       ["<C-h>"] = { "<C-w>h", expr = true, mode = { "n" } },
-        --       ["<C-l>"] = { "<C-w>l", expr = true, mode = { "n" } },
-        --     },
-        --   },
-        -- },
         sources = {
-          files = {
-            hidden = true,
-            --   ignored = false,
-            --   args = {
-            --     "--glob",
-            --     "!{node_modules,build,dist,.git}",
-            --   },
-          },
-          grep = {
-            hidden = true,
-            ignored = true,
-          },
-          explorer = {
-            hidden = true,
-            ignored = true,
-          },
+          files = { hidden = true },
+          grep = { hidden = true, ignored = true },
+          explorer = { hidden = true, ignored = true },
         },
       },
     },
@@ -109,9 +99,7 @@ return {
     opts = function(_, opts)
       return vim.tbl_deep_extend("force", opts, {
         diagnostics = { virtual_text = false },
-        inlay_hints = {
-          enabled = false,
-        },
+        inlay_hints = { enabled = false },
         servers = {
           gopls = {
             settings = {
@@ -147,7 +135,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      -- add tsx and treesitter
       vim.list_extend(opts.ensure_installed, {
         "tsx",
         "typescript",
@@ -180,5 +167,10 @@ return {
         "make",
       })
     end,
+  },
+
+  {
+    "folke/trouble.nvim",
+    opts = { use_diagnostic_signs = true },
   },
 }
