@@ -133,9 +133,13 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters = {
-        prettier = {
-          prepend_args = { "--ignore-path", "" },
+        prettier = { prepend_args = { "--ignore-path", "" } },
+        golines = {
+          prepend_args = { "--max-len=120", "--shorten-comments" },
         },
+      },
+      formatters_by_ft = {
+        go = { "goimports", "gofmt", "golines" },
       },
     },
   },
