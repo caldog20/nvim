@@ -1,5 +1,68 @@
 local M = {}
 
+function M.add_tags(tag)
+  tag = tag or "json"
+  local file = vim.api.nvim_buf_get_name(0)
+  local struct_name = vim.fn.expand("<cword>")
+  if struct_name == "" then
+    vim.notify("add_tags: cursor must be on a struct name", vim.log.levels.WARN)
+    return
+  end
+
+  local result = vim.fn.systemlist({ "gomodifytags", "-file", file, "-struct", struct_name, "-add-tags", tag, "-w", "--quiet" })
+  if vim.v.shell_error ~= 0 then
+    vim.notify("gomodifytags: " .. table.concat(result, "\n"), vim.log.levels.ERROR)
+    return
+  end
+  vim.cmd.edit()
+end
+
+function M.impl()
+  local struct_name = vim.fn.expand("<cword>")
+  if struct_name == "" then
+    vim.notify("impl: cursor must be on a struct name", vim.log.levels.WARN)
+    return
+  end
+
+  local receiver_var = string.lower(string.sub(struct_name, 1, 1))
+
+  vim.ui.input({
+    prompt = string.format("Implement interface for %s *%s: ", receiver_var, struct_name),
+    default = "",
+  }, function(input)
+    if not input or input == "" then return end
+
+    local receiver = string.format("%s *%s", receiver_var, struct_name)
+    local cwd = vim.fn.expand("%:p:h")
+    local out = vim.system({ "impl", receiver, input }, { cwd = cwd, text = true }):wait()
+    if out.code ~= 0 then
+      vim.notify("impl: " .. (out.stderr or ""), vim.log.levels.ERROR)
+      return
+    end
+    local result = vim.split(out.stdout, "\n", { trimempty = true })
+
+    -- Find end of the type declaration block and insert after it.
+    local bufnr = vim.api.nvim_get_current_buf()
+    local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local parser = vim.treesitter.get_parser(bufnr, "go")
+    local node = parser:parse()[1]:root():named_descendant_for_range(row, 0, row, 0)
+    while node and node:type() ~= "type_declaration" do
+      node = node:parent()
+    end
+
+    local insert_row
+    if node then
+      _, _, insert_row, _ = node:range()
+      insert_row = insert_row + 1
+    else
+      insert_row = row + 1
+    end
+
+    table.insert(result, 1, "")
+    vim.api.nvim_buf_set_lines(bufnr, insert_row, insert_row, false, result)
+  end)
+end
+
 function M.mod_tidy()
   local Job = require("plenary.job")
   Snacks.notify("running go mod tidy...", {
