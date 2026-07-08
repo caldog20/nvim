@@ -134,13 +134,13 @@ return {
     opts = {
       formatters = {
         prettier = { prepend_args = { "--ignore-path", "" } },
-        golines = {
-          prepend_args = { "--max-len=120", "--shorten-comments" },
-        },
+        -- golines = {
+        --   prepend_args = { "--max-len=120", "--shorten-comments" },
+        -- },
       },
-      formatters_by_ft = {
-        go = { "goimports", "gofmt", "golines" },
-      },
+      -- formatters_by_ft = {
+      --   go = { "goimports", "gofmt", "golines" },
+      -- },
     },
   },
 
@@ -177,6 +177,17 @@ return {
         "c_sharp",
         "asm",
         "make",
+      })
+    end,
+  },
+  {
+    "mason-org/mason.nvim",
+    opts = function(_, opts)
+      -- Add your custom packages to the existing list
+      vim.list_extend(opts.ensure_installed, {
+        -- LSPs
+        -- Formatters & Linters
+        "golines",
       })
     end,
   },
